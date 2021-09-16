@@ -1,5 +1,6 @@
-from PIL import Image
+from PIL import Image, ImageChops
 import os # ファイルやフォルダ操作
+import glob
 dir_name = "mikakou" # 画像が入っているフォルダ
 new_dir_name = "new" # 画像を保存する先のフォルダ
 
@@ -16,13 +17,28 @@ i = 1
 
 for file in files: # ホーム画面用の処理
   im = Image.open(os.path.join(dir_name, file))
+  name, ext = os.path.splitext(os.path.basename(file))
   width, height = im.size
-  if width > height: # 横長
-    im_new = crop_center(im, 1000, 750)
+
+  if height > width: # 縦長
+    im = crop_center(im, 750, 1050)
   else:
-    im_new = crop_center(im, 750, 1000)
-  im_new.save(os.path.join(new_dir_name, file))
+    im = crop_center(im, 1050, 750)
+
+  # 背景色画像を生成
+  im2 = im.convert("RGB")
+  bg = Image.new("RGB", im2.size, im2.getpixel((0, 0)))
+
+  # 背景色画像と元画像の差分画像を生成
+  diff = ImageChops.difference(im2, bg)
+
+  # 背景との境界を求めて画像を切り抜く
+  croprange = diff.convert("RGB").getbbox()
+  nim = im.crop(croprange)
+
+  # 切り抜いた画像を保存
+  nim.save(os.path.join(new_dir_name, '%s.png' % name))
+  # nim.save(os.path.join(new_dir_name, file))
   print(str(i) + " done!")
   i += 1
-
 print("Complete!")
