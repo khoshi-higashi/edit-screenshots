@@ -11,6 +11,10 @@ def crop_center(pil_img, crop_width, crop_height): # 画像の中心を切り出
                         (img_width + crop_width) // 2,
                         (img_height + crop_height) // 2))
 
+# ディレクトリが存在しない場合は作成する
+if not os.path.exists(new_dir_name):
+  os.mkdir(new_dir_name)
+
 files = os.listdir(dir_name)
 
 i = 1
