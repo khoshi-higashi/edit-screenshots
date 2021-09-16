@@ -4,6 +4,7 @@ import glob
 import shutil
 dir_name = "mikakou" # 画像が入っているフォルダ
 new_dir_name = "new" # 画像を保存する先のフォルダ
+used_dir_name ="used"
 
 def crop_center(pil_img, crop_width, crop_height): # 画像の中心を切り出し
   img_width, img_height = pil_img.size
@@ -20,16 +21,15 @@ if not os.path.exists(dir_name):
 if not os.path.exists(new_dir_name):
   os.mkdir(new_dir_name)
 
+# ディレクトリが存在しない場合は作成する
+if not os.path.exists(used_dir_name):
+  os.mkdir(used_dir_name)
+
 def move_glob(dst_path, pathname, recursive=True): # glob.glob()で抽出された複数のファイルを一括で移動
   for p in glob.glob(pathname, recursive=recursive):
     shutil.move(p, dst_path)
 
 move_glob(dir_name, '*.png')
-
-# print(glob.glob('*.png'))
-# files = os.listdir('/')
-# for file in files: # ホーム画面用の処理
-#   shutil.move('*.png', dir_name)
 
 files = os.listdir(dir_name)
 
@@ -41,10 +41,10 @@ for file in files: # ホーム画面用の処理
   width, height = im_original.size
 
   if height > width: # 縦長
-    im = crop_center(im_original, 750, 1050)
+    im = crop_center(im_original, width, height - 208)
   else:
-    # im = crop_center(im_original, 1100, 750)
-    im = im_original
+    im = crop_center(im_original, width - 50, height)
+    # im = im_original
 
   # 背景色画像を生成
   im2 = im.convert("RGB")
@@ -63,8 +63,9 @@ for file in files: # ホーム画面用の処理
   print(str(i) + " done!")
   i += 1
 
+move_glob(used_dir_name, "./mikakou/*.PNG")
+
 # 終了時に元の画像を削除
 shutil.rmtree(dir_name)
-os.mkdir(dir_name)
 
 print("Complete!")
