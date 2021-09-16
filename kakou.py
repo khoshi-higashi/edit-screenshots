@@ -13,8 +13,23 @@ def crop_center(pil_img, crop_width, crop_height): # 画像の中心を切り出
                         (img_height + crop_height) // 2))
 
 # ディレクトリが存在しない場合は作成する
+if not os.path.exists(dir_name):
+  os.mkdir(dir_name)
+
+# ディレクトリが存在しない場合は作成する
 if not os.path.exists(new_dir_name):
   os.mkdir(new_dir_name)
+
+def move_glob(dst_path, pathname, recursive=True): # glob.glob()で抽出された複数のファイルを一括で移動
+  for p in glob.glob(pathname, recursive=recursive):
+    shutil.move(p, dst_path)
+
+move_glob(dir_name, '*.png')
+
+# print(glob.glob('*.png'))
+# files = os.listdir('/')
+# for file in files: # ホーム画面用の処理
+#   shutil.move('*.png', dir_name)
 
 files = os.listdir(dir_name)
 
