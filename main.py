@@ -45,7 +45,7 @@ for file in files: # ホーム画面用の処理
 
   if height > width: # 縦長
     im = im_original
-    # im = crop_center(im, width, height - 208)
+    im = crop_center(im, width, height - 208)
   else:
     im = im_original
     # im = crop_center(im, width - 50, height)
