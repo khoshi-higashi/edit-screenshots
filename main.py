@@ -73,7 +73,7 @@ def func():
   move_glob(used_dir_name, "./mikakou/*.JPEG")
 
   # 終了時に元の画像を削除
-  shutil.rmtree(dir_name)
+  # shutil.rmtree(dir_name)
 
   print("Complete!")
 
