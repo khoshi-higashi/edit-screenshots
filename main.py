@@ -75,7 +75,8 @@ def func():
   # 終了時に元の画像を削除
   # shutil.rmtree(dir_name)
 
-  print("Complete!")
+  print("Exit a program")
 
 if __name__ == "__main__":
+  print("Execute a program")
   func()
