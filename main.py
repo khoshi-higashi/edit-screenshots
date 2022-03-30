@@ -2,6 +2,7 @@ from PIL import Image, ImageChops
 import os # ファイルやフォルダ操作
 import glob
 import shutil
+import datetime # 現在時刻を取得
 
 dir_name = "mikakou" # 画像が入っているフォルダ
 new_dir_name = "new" # 画像を保存する先のフォルダ
@@ -62,8 +63,13 @@ def func():
     croprange = diff.convert("RGB").getbbox()
     nim = im.crop(croprange)
 
+    dt_now = datetime.datetime.now()
+    # print(dt_now.strftime('%Y%m%d_%H%M%S'))
+    name = str(dt_now.strftime('%Y%m%d_%H%M%S'))
+    name += ".png"
+
     # 切り抜いた画像を保存
-    nim.save(os.path.join(new_dir_name, file))
+    nim.save(os.path.join(new_dir_name, name))
 
     print(str(i) + " done!")
     i += 1
