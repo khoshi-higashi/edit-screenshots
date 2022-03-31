@@ -3,6 +3,7 @@ import os # ファイルやフォルダ操作
 import glob
 import shutil
 import datetime # 現在時刻を取得
+import time
 
 dir_name = "mikakou" # 画像が入っているフォルダ
 new_dir_name = "new" # 画像を保存する先のフォルダ
@@ -73,6 +74,7 @@ def func():
 
     print(str(i) + " done!")
     i += 1
+    time.sleep(1)
 
   move_glob(used_dir_name, "./mikakou/*.PNG")
   move_glob(used_dir_name, "./mikakou/*.JPG")
