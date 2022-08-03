@@ -66,11 +66,15 @@ def func():
 
     dt_now = datetime.datetime.now()
     # print(dt_now.strftime('%Y%m%d_%H%M%S'))
-    name = str(dt_now.strftime('%Y%m%d_%H%M%S'))
-    name += ".png"
+    name_png = str(dt_now.strftime('%Y%m%d_%H%M%S'))
+    name_jpg = name_png + ".jpg"
+    name_png += ".png"
 
     # 切り抜いた画像を保存
-    nim.save(os.path.join(new_dir_name, name))
+    nim.save(os.path.join(new_dir_name, name_png))
+
+    nim = nim.convert('RGB') # RGBA(png)→RGB(jpg)へ変換
+    nim.save(os.path.join(new_dir_name, name_jpg), "JPEG", quality=95)
 
     print(str(i) + " done!")
     i += 1
