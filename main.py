@@ -71,7 +71,7 @@ def func():
     name_png += ".png"
 
     # 切り抜いた画像を保存
-    nim.save(os.path.join(new_dir_name, name_png))
+    # nim.save(os.path.join(new_dir_name, name_png))
 
     nim = nim.convert('RGB') # RGBA(png)→RGB(jpg)へ変換
     nim.save(os.path.join(new_dir_name, name_jpg), "JPEG", quality=95)
